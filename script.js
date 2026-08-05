@@ -16,28 +16,47 @@ const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
 if (contactForm) {
-  contactForm.addEventListener('submit', (event) => {
+  contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const name = contactForm.querySelector('input[name="name"]').value.trim();
-    const email = contactForm.querySelector('input[name="email"]').value.trim();
-    const project = contactForm.querySelector('input[name="project"]').value.trim();
-    const message = contactForm.querySelector('textarea[name="message"]').value.trim();
-
-    const subject = project ? `Portfolio Inquiry - ${project}` : 'Portfolio Inquiry';
-    const body = `Name: ${name}\nEmail: ${email}\nProject: ${project || 'Not specified'}\n\nMessage:\n${message}`;
-    const mailtoUrl = `mailto:albertojestone1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const submitButton = contactForm.querySelector('button[type="submit"]');
 
     if (formStatus) {
-      formStatus.textContent = 'Preparing your message...';
+      formStatus.textContent = 'Sending your message...';
     }
 
-    const newWindow = window.open(mailtoUrl, '_blank');
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+    }
 
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      window.location.href = mailtoUrl;
-    } else if (formStatus) {
-      formStatus.textContent = 'Your email app should open with your message ready.';
+    try {
+      const formData = new FormData(contactForm);
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        contactForm.reset();
+        if (formStatus) {
+          formStatus.textContent = 'Your message was sent successfully.';
+        }
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      if (formStatus) {
+        formStatus.textContent = 'Something went wrong. Please try again or contact me directly at albertojestone1@gmail.com.';
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Message';
+      }
     }
   });
 }

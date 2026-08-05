@@ -344,17 +344,53 @@ h2 {
   gap: 1rem;
 }
 
+.sample-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .sample-item {
   padding: 1.3rem;
   border-radius: 1.2rem;
   background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
   border: 1px solid var(--border);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  height: 100%;
 }
 
 .sample-item:hover {
   transform: translateY(-4px);
   border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+}
+
+.sample-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+.sample-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(45, 212, 191, 0.14);
+  color: var(--accent);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sample-open {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .contact-page {
@@ -422,6 +458,18 @@ h2 {
   color: var(--accent);
   font-size: 0.95rem;
   margin-top: 0.2rem;
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.3rem;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 .sample-item h3 {
